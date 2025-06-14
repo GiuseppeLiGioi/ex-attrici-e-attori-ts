@@ -1,12 +1,12 @@
 import './style.css'
 /*
-📌 Milestone 3
-Crea una funzione getActress che, dato un id, effettua una chiamata a:
+📌 Milestone 4
+Crea una funzione getAllActresses che chiama:
 
-GET /actresses/:id
-La funzione deve restituire l’oggetto Actress, se esiste, oppure null se non trovato.
+GET /actresses
+La funzione deve restituire un array di oggetti Actress.
 
-Utilizza un type guard chiamato isActress per assicurarti che la struttura del dato ricevuto sia corretta.
+Può essere anche un array vuoto.
 */
 
 
@@ -76,3 +76,31 @@ async function getActress(id: number): Promise<Actress | null> {
   const attrice = await getActress(2);
   console.log(attrice);
 })();
+
+async function getAllActresses(): Promise<Actress[]> {
+  try {
+    const response = await fetch(`http://localhost:3333/actresses`);
+    if (!response.ok) {
+      throw new Error(`Errore nella risposta: ${response.status}`);
+    }
+    const dati: unknown = await response.json();
+    if (Array.isArray(dati)) {
+      return dati.filter(isActress);
+    } else {
+      return [];
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error);
+    }
+    return [];
+  }
+}
+
+
+
+(async () => {
+  const arrAttrici = await getAllActresses();
+  console.log(arrAttrici);
+})();
+
