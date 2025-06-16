@@ -174,16 +174,7 @@ console.log(updateActrice)
 
 
 
-/*
-🎯 BONUS 2
-Crea un tipo Actor, che estende Person con le seguenti differenze rispetto ad Actress:
 
-known_for: una tuple di 3 stringhe
-awards: array di una o due stringhe
-nationality: le stesse di Actress più:
-Scottish, New Zealand, Hong Kong, German, Canadian, Irish.
-Implementa anche le versioni getActor, getAllActors, getActors, createActor, updateActor.
-*/
 
 type Actor = Person & {
 known_for: [string, string, string],
@@ -291,3 +282,36 @@ biography: "Famoso Romanista"
 
 const updatedActor = updateActor(attoreCompleto, modificheAttore)
 console.log(updatedActor)
+
+
+
+/*
+
+
+🎯 BONUS 3
+Crea la funzione createRandomCouple che usa getAllActresses e getAllActors per restituire un’array che ha sempre due elementi: 
+al primo posto una Actress casuale e al secondo posto un Actor casuale.
+*/
+
+async function createRandomCouple() : Promise<[Actress, Actor] | null> {
+  try{
+    const [actresses, actors] = await Promise.all([getAllActresses(), getAllActors()]) //al promise.all passiamo l'array delle promise... nel nostro case generate dalle funzioni
+     if(actresses.length === 0 || actors.length === 0 ){
+      throw new Error("Attori o attrici non disponibili")
+     }
+     
+     const randomActress = actresses[Math.floor(Math.random() * actresses.length)]
+     const randomActor = actors[Math.floor(Math.random() * actors.length)]
+     return [randomActress, randomActor];
+  }catch(error){
+    if(error instanceof Error){
+      console.error("Errore nella creazione della coppia casuale:", error)
+      return null
+    }
+  }
+}
+
+(async () => {
+const coppia = await createRandomCouple()
+console.log(coppia)
+})();
