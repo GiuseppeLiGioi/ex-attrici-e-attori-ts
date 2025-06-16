@@ -1,13 +1,5 @@
 import './style.css'
-/*
-📌 Milestone 4
-Crea una funzione getAllActresses che chiama:
 
-GET /actresses
-La funzione deve restituire un array di oggetti Actress.
-
-Può essere anche un array vuoto.
-*/
 
 
 
@@ -38,7 +30,7 @@ function isActress(obj: unknown) : obj is Actress{
         "name" in o && typeof o.name === "string" &&
         "birth_year" in o && typeof o.birth_year === "number" &&
         "death_year" in o && typeof o.death_year === "number" &&
-        "biography" in o && typeof obj.biography === "string" &&
+        "biography" in o && typeof o.biography === "string" &&
         "image" in o && typeof o.image === "string" &&
         Array.isArray(o.most_famous_movies) && o.most_famous_movies.length === 3 && o.most_famous_movies.every(m => typeof m === "string") &&
         "awards" in o && typeof o.awards === "string" &&
@@ -103,4 +95,42 @@ async function getAllActresses(): Promise<Actress[]> {
   const arrAttrici = await getAllActresses();
   console.log(arrAttrici);
 })();
+
+/*
+🎯 BONUS 1
+Crea le funzioni:
+
+createActress
+updateActress
+Utilizza gli Utility Types:
+
+Omit: per creare un'attrice senza passare id, che verrà generato casualmente.
+Partial: per permettere l’aggiornamento di qualsiasi proprietà tranne id e name.
+*/
+const generaId = () => {
+  const randomId =  Math.floor(Math.random() * 1_000_000); 
+  return randomId;
+}
+
+const nuovaAttrice: Omit<Actress, "id"> = {
+  name: "Jane Doe",
+  birth_year: 1990,
+  biography: "Attrice famosa per i suoi ruoli drammatici.",
+  image: "https://example.com/jane.jpg",
+  most_famous_movies: ["Film 1", "Film 2", "Film 3"],
+  awards: "Oscar 2020",
+  nationality: "British"
+};
+function createActress (dati: Omit <Actress, "id">) : Actress {
+return {
+  id: generaId(),
+  ...dati
+}
+}
+
+
+
+
+const newActrice = createActress(nuovaAttrice)
+console.log(newActrice)
 
