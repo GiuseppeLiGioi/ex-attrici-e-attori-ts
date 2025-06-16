@@ -121,6 +121,7 @@ const nuovaAttrice: Omit<Actress, "id"> = {
   awards: "Oscar 2020",
   nationality: "British"
 };
+
 function createActress (dati: Omit <Actress, "id">) : Actress {
 return {
   id: generaId(),
@@ -129,8 +130,32 @@ return {
 }
 
 
+const attriceCompleta: Actress = {
+  id: 123,
+  name: "Jane Doe",
+  birth_year: 1990,
+  biography: "Attrice famosa per i suoi ruoli drammatici.",
+  image: "https://example.com/jane.jpg",
+  most_famous_movies: ["Film 1", "Film 2", "Film 3"],
+  awards: "Oscar 2020",
+  nationality: "British"
+};
+function updateActress (attrice: Actress, modifiche: Partial<Actress>) : Actress {
+return {
+  ...attrice,
+  ...modifiche
+}
+}
+
+
+const modificata = {
+   birth_year: 1960
+}
 
 
 const newActrice = createActress(nuovaAttrice)
 console.log(newActrice)
+
+const updateActrice = updateActress(attriceCompleta, modificata)
+console.log(updateActrice)
 
