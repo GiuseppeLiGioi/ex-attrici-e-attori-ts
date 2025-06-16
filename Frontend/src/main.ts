@@ -156,6 +156,6 @@ const modificata = {
 const newActrice = createActress(nuovaAttrice)
 console.log(newActrice)
 
+
 const updateActrice = updateActress(attriceCompleta, modificata)
 console.log(updateActrice)
-
